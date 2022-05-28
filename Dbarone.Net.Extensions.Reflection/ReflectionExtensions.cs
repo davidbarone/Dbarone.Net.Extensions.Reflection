@@ -121,7 +121,7 @@ public static class ReflectionExtensions
     /// </summary>
     /// <param name="domain">The AppDomain to search for types.</param>
     /// <param name="baseType">The base type.</param>
-    /// <returns></returns>
+    /// <returns>Returns a collection of types that the base type is assignable from.</returns>
     public static IEnumerable<Type> GetTypesAssignableFrom(this AppDomain domain, Type baseType)
     {
         List<Type> types = new List<Type>();
@@ -149,7 +149,7 @@ public static class ReflectionExtensions
     /// </summary>
     /// <typeparam name="T">The base type.</typeparam>
     /// <param name="domain">The AppDomain to search for types.</param>
-    /// <returns></returns>
+    /// <returns>Returns a collection of types that subclass the specified type.</returns>
     public static IEnumerable<Type> GetSubclassTypesOf<T>(this AppDomain domain)
     {
         List<Type> types = new List<Type>();
@@ -169,6 +169,11 @@ public static class ReflectionExtensions
         return types;
     }
 
+    /// <summary>
+    /// Returns true if a PropertyInfo object is an indexer property.
+    /// </summary>
+    /// <param name="prop">The property to check.</param>
+    /// <returns>Returns true if the property is an indexer property.</returns>
     public static bool IsIndexerProperty(this PropertyInfo prop)
     {
         return prop.GetIndexParameters().Length > 0;
