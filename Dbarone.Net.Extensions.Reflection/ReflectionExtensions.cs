@@ -14,7 +14,7 @@ public static class ReflectionExtensions
     /// <param name="inherit">If true, specifies to also search the ancestors of element for custom attributes.</param>
     /// <param name="bindingFlags">When overridden in a derived class, searches for the properties defined for the current System.Type , using the specified binding constraints.</param>
     /// <returns>A list of properties containing the specified attribute.</returns>
-    public static IEnumerable<PropertyInfo> GetPropertiesDecoratedBy<T>(this object obj, bool inherit = false, BindingFlags bindingFlags = BindingFlags.Default) where T : Attribute
+    public static IEnumerable<PropertyInfo> GetPropertiesDecoratedBy<T>(this object obj, bool inherit = false, BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static) where T : Attribute
     {
         return obj.GetType()
             .GetProperties(bindingFlags)
@@ -29,7 +29,7 @@ public static class ReflectionExtensions
     /// <param name="inherit">If true, specifies to also search the ancestors of element for custom attributes.</param>
     /// <param name="bindingFlags">When overridden in a derived class, searches for the properties defined for the current System.Type , using the specified binding constraints.</param>
     /// <returns>A list of properties containing the specified attribute.</returns>
-    public static IEnumerable<PropertyInfo> GetPropertiesDecoratedBy<T>(this Type t, bool inherit = false, BindingFlags bindingFlags = BindingFlags.Default) where T : Attribute
+    public static IEnumerable<PropertyInfo> GetPropertiesDecoratedBy<T>(this Type t, bool inherit = false, BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static) where T : Attribute
     {
         return t
             .GetProperties(bindingFlags)
@@ -44,7 +44,7 @@ public static class ReflectionExtensions
     /// <param name="inherit">If true, specifies to also search the ancestors of element for custom attributes.</param>
     /// <param name="bindingFlags">When overridden in a derived class, searches for the members defined for the current System.Type , using the specified binding constraints.</param>
     /// <returns>A list of members containing the specified attribute.</returns>
-    public static IEnumerable<MemberInfo> GetMembersDecoratedBy<T>(this object obj, bool inherit = false, BindingFlags bindingFlags = BindingFlags.Default) where T : Attribute
+    public static IEnumerable<MemberInfo> GetMembersDecoratedBy<T>(this object obj, bool inherit = false, BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static) where T : Attribute
     {
         return obj.GetType()
             .GetMembers(bindingFlags)
@@ -59,7 +59,7 @@ public static class ReflectionExtensions
     /// <param name="inherit">If true, specifies to also search the ancestors of element for custom attributes.</param>
     /// <param name="bindingFlags">When overridden in a derived class, searches for the members defined for the current System.Type , using the specified binding constraints.</param>
     /// <returns>A list of members containing the specified attribute.</returns>
-    public static IEnumerable<MemberInfo> GetMembersDecoratedBy<T>(this Type t, bool inherit = false, BindingFlags bindingFlags = BindingFlags.Default) where T : Attribute
+    public static IEnumerable<MemberInfo> GetMembersDecoratedBy<T>(this Type t, bool inherit = false, BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static) where T : Attribute
     {
         return t
             .GetMembers(bindingFlags)
@@ -74,7 +74,7 @@ public static class ReflectionExtensions
     /// <param name="inherit">If true, specifies to also search the ancestors of element for custom attributes.</param>
     /// <param name="bindingFlags">When overridden in a derived class, searches for the methods defined for the current System.Type , using the specified binding constraints.</param>
     /// <returns>A list of methods containing the specified attribute.</returns>
-    public static IEnumerable<MethodInfo> GetMethodsDecoratedBy<T>(this object obj, bool inherit = false, BindingFlags bindingFlags = BindingFlags.Default) where T : Attribute
+    public static IEnumerable<MethodInfo> GetMethodsDecoratedBy<T>(this object obj, bool inherit = false, BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static) where T : Attribute
     {
         return obj.GetType()
             .GetMethods(bindingFlags)
@@ -89,7 +89,7 @@ public static class ReflectionExtensions
     /// <param name="inherit">If true, specifies to also search the ancestors of element for custom attributes.</param>
     /// <param name="bindingFlags">When overridden in a derived class, searches for the methods defined for the current System.Type , using the specified binding constraints.</param>
     /// <returns>A list of methods containing the specified attribute.</returns>
-    public static IEnumerable<MethodInfo> GetMethodsDecoratedBy<T>(this Type t, bool inherit = false, BindingFlags bindingFlags = BindingFlags.Default) where T : Attribute
+    public static IEnumerable<MethodInfo> GetMethodsDecoratedBy<T>(this Type t, bool inherit = false, BindingFlags bindingFlags = BindingFlags.Public | BindingFlags.Instance | BindingFlags.Static) where T : Attribute
     {
         return t
             .GetMethods(bindingFlags)
