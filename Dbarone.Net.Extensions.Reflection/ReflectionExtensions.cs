@@ -143,7 +143,7 @@ public static class ReflectionExtensions
         }
         return types;
     }
-    
+
     /// <summary>
     /// Returns a collection of types in an AppDomain that are a subclass of a specified base type.
     /// </summary>
@@ -177,5 +177,49 @@ public static class ReflectionExtensions
     public static bool IsIndexerProperty(this PropertyInfo prop)
     {
         return prop.GetIndexParameters().Length > 0;
-    }    
+    }
+
+    /// <summary>
+    /// Returns true if the .NET type is a numeric type.
+    /// </summary>
+    /// <param name="type">The type to check.</param>
+    /// <returns>Returns true if the type is numeric.</returns>
+    public static bool IsNumeric(this Type type)
+    {
+        switch (Type.GetTypeCode(type))
+        {
+            case TypeCode.Byte:
+            case TypeCode.SByte:
+            case TypeCode.UInt16:
+            case TypeCode.UInt32:
+            case TypeCode.UInt64:
+            case TypeCode.Int16:
+            case TypeCode.Int32:
+            case TypeCode.Int64:
+            case TypeCode.Decimal:
+            case TypeCode.Double:
+            case TypeCode.Single:
+                return true;
+            default:
+                return false;
+        }
+    }
+
+    /// <summary>
+    /// Returns the default value for a type.
+    /// For value types, returns default value. For reference types, returns null. 
+    /// </summary>
+    /// <param name="type">The type.</param>
+    /// <returns></returns>
+    public static object? Default(this Type type)
+    {
+        if (type.IsValueType)
+        {
+            return Activator.CreateInstance(type);
+        }
+        else
+        {
+            return null;
+        }
+    }
 }
