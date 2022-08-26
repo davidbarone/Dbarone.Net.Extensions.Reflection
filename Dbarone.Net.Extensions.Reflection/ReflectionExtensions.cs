@@ -222,4 +222,21 @@ public static class ReflectionExtensions
             return null;
         }
     }
+
+    /// <summary>
+    /// Parses a string to another type. The type must support the Parse method.
+    /// </summary>
+    /// <param name="str">The string value to parse.</param>
+    /// <param name="type">The type of value to parse the string into.</param>
+    /// <returns>The string value parsed to the required type.</returns>
+    public static object Parse(this Type type, string str)
+    {
+        MethodInfo mi = type.GetMethod("Parse", new[] { typeof(string) })!;
+        if (mi != null)
+        {
+            return mi.Invoke(null, new object[] { str })!;
+        }
+        else
+            throw new ApplicationException($"Type [{type.Name}] does not support the Parse method.");
+    }
 }
