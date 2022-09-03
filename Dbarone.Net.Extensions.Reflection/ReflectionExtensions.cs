@@ -224,6 +224,54 @@ public static class ReflectionExtensions
     }
 
     /// <summary>
+    /// Gets the nullable type from a non-nullable type.
+    /// </summary>
+    /// <param name="type">The non-nullable type. Can be value or reference type. Reference types are assumed to be nullable already.</param>
+    /// <returns></returns>
+    public static Type GetNullableType(this Type type)
+    {
+        if (type.IsValueType && (!type.IsGenericType || type.GetGenericTypeDefinition() != typeof(Nullable<>)))
+            return typeof(Nullable<>).MakeGenericType(type);
+
+        // Is already nullable
+        return type;
+    }
+
+    /// <summary>
+    /// Gets the underlying type for a nullable type.
+    /// </summary>
+    /// <param name="type">The nullable type.</param>
+    /// <returns>Returns the underlying type for a nullable type, or null if the type is not a nullable type.</returns>
+    public static Type? GetNullableUnderlyingType(this Type type)
+    {
+        var underlyingType = Nullable.GetUnderlyingType(type);
+        /*
+        if (underlyingType == null)
+        {
+            throw new Exception("Type is not a nullable type");
+        }
+        */
+        return underlyingType;
+    }
+
+    /// <summary>
+    /// Returns whether a type is a nullable type.
+    /// </summary>
+    /// <param name="t"></param>
+    /// <returns></returns>
+    public static bool IsNullable(this Type t)
+    {
+        if (t.IsGenericType && t.GetGenericTypeDefinition().Equals(typeof(Nullable<>)))
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    /// <summary>
     /// Parses a string to another type. The type must support the Parse method.
     /// </summary>
     /// <param name="str">The string value to parse.</param>
@@ -238,5 +286,25 @@ public static class ReflectionExtensions
         }
         else
             throw new ApplicationException($"Type [{type.Name}] does not support the Parse method.");
+    }
+
+    /// <summary>
+    /// Parses a string to another type. The type must support the Parse method. Null or empty strings are 
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="expression"></param>
+    /// <param name="parseMethod"></param>
+    /// <returns></returns>
+    public static object? ParseNullable(this Type type, string? str)
+    {
+        var nullableType = type.GetNullableType();
+        if (string.IsNullOrEmpty(str))
+        {
+            return nullableType.Default();
+        }
+        else
+        {
+            return type.Parse(str);
+        }
     }
 }
